@@ -45,8 +45,39 @@ class Snake{
     }
 }
 
-const snake = new Snake(10, 10);
 
+class Apple{
+    generate(){
+        let touch = true;
+        let squareTouch;
+
+        while(touch){
+            
+            let positionApple = [{x:Math.floor(Math.random()*485), y:Math.floor(Math.random()*485)}];
+
+            squareTouch = snake.tail.filter(obj =>{
+                if(obj.x === positionApple[0].x && obj.y === positionApple[0].y){
+                    return obj;
+                }
+            });
+    
+            if(squareTouch){
+                continue;
+            }
+            else{
+                touch = false;
+            }
+        }
+        ctx.fillStyle = "red";
+        createSquare(positionApple[0].x, positionApple[0].y, 15, 15, "red");
+
+    }
+
+
+}
+
+const snake = new Snake(10, 10);
+const apple = new Apple()
 
 const createSquare = (x, y, width, height, color) => {
     ctx.fillStyle = color;
@@ -59,6 +90,7 @@ const update = () => {
         
         createSquare(snake.tail[i].x, snake.tail[i].y, 15, 15, "#fff");
     }
+    
     
 }
 
@@ -89,6 +121,7 @@ document.addEventListener('keydown', (key)=>{
 const gameLoop = () => {
     setInterval(() => {
         snake.move();
+        
         update();
         
     }, 500);
