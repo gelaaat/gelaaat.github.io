@@ -8,8 +8,6 @@ class Snake{
         this.y = y;
         this.tail = [{x:this.x, y:this.y}];
         this.direction = [{x:1, y:0}];
-        console.log(this.x);
-        console.log(this.tail[0]);
     }
 
     move(){
@@ -39,45 +37,69 @@ class Snake{
                 y: this.tail[this.tail.length - 1].y
             } 
         }
-        this.tail.shift();
+        
         this.tail.push(newReaction);
+        if(!isTouching()){
+            this.tail.shift();
+        }
+        
         
     }
+
+    
 }
 
+const positionRound20 = () =>{
+    let number = Math.floor(Math.random()*480);
+    return Math.ceil(number/20)*20
+}
 
 class Apple{
+    constructor(){
+        this.position = {x:positionRound20(), y: positionRound20()}
+       
+    }
+
     generate(){
-        let touch = true;
-        let squareTouch;
-
+        let touch = isTouching();
         while(touch){
-            
-            let positionApple = [{x:Math.floor(Math.random()*485), y:Math.floor(Math.random()*485)}];
-
-            squareTouch = snake.tail.filter(obj =>{
-                if(obj.x === positionApple[0].x && obj.y === positionApple[0].y){
-                    return obj;
-                }
-            });
-    
-            if(squareTouch){
-                continue;
-            }
-            else{
-                touch = false;
-            }
+            this.position = {x:positionRound20(), y: positionRound20()}
+            touch = isTouching();
         }
-        ctx.fillStyle = "red";
-        createSquare(positionApple[0].x, positionApple[0].y, 15, 15, "red");
+        
 
+        createSquare(this.position.x, this.position.y, 15, 15, "#FF000");
+        
     }
 
 
 }
 
-const snake = new Snake(10, 10);
+const snake = new Snake(0, 0);
 const apple = new Apple()
+
+
+const isTouching = () => {
+    let isTouching;
+    let touchingSquare;
+
+    touchingSquare = snake.tail.filter(obj => {
+        if(obj.x === apple.position.x && obj.y === apple.position.y){
+            return obj
+        }}
+        
+    );
+
+    if(touchingSquare.length === 0){
+        isTouching = false;
+    }
+    else{
+        isTouching = true;
+    }
+    
+
+    return isTouching;
+}
 
 const createSquare = (x, y, width, height, color) => {
     ctx.fillStyle = color;
@@ -87,10 +109,15 @@ const createSquare = (x, y, width, height, color) => {
 const update = () => {
     createSquare(0, 0, canvas.width, canvas.height, "black");
     for (let i = 0; i < snake.tail.length; i++) {
-        
         createSquare(snake.tail[i].x, snake.tail[i].y, 15, 15, "#fff");
     }
     
+    if (isTouching()){
+        apple.generate();
+    }
+    else{
+        createSquare(apple.position.x, apple.position.y, 15, 15, "#FF000");
+    }
     
 }
 
@@ -118,13 +145,14 @@ document.addEventListener('keydown', (key)=>{
 })
 
 
+
 const gameLoop = () => {
     setInterval(() => {
         snake.move();
-        
         update();
         
-    }, 500);
+        
+    }, 100);
 }
 
 gameLoop();
