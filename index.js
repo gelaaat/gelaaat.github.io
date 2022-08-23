@@ -12,43 +12,56 @@ class Snake{
     }
 
     move(){
-        
+        let newReaction;
+
         if(this.direction.x === 0 && this.direction.y === 1){
-            this.y += 20;
+            newReaction = {
+                x: snake.tail[snake.tail.length - 1].x,
+                y: snake.tail[snake.tail.length - 1].y + 20
+            }
         }
         else if(this.direction.x === 0 && this.direction.y === -1){
-            this.y -= 20; 
+            newReaction = {
+                x: snake.tail[snake.tail.length - 1].x,
+                y: snake.tail[snake.tail.length - 1].y - 20
+            } 
         }
         else if(this.direction.x === -1 && this.direction.y === 0){
-            this.x -= 20; 
+            newReaction = {
+                x: snake.tail[snake.tail.length - 1].x - 20,
+                y: snake.tail[snake.tail.length - 1].y
+            } 
         }
         else if(this.direction.x === 1 && this.direction.y === 0){
-            this.x += 20;
+            newReaction = {
+                x: snake.tail[snake.tail.length - 1].x + 20,
+                y: snake.tail[snake.tail.length - 1].y
+            }
         }
 
-        
-
-    }
-}
-
-
-class Apple{
-    constructor(){
+        this.tail.push(newReaction);
 
     }
 }
 
 const snake = new Snake();
-const apple = new Apple();
 
+
+const createSquare = (x, y, width, height, color) => {
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+}
 
 const update = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(snake.x, snake.y, 15, 15);
+    createSquare(0, 0, canvas.width, canvas.height, "black");
+    for (let i = 0; i < snake.tail.length; i++) {
+        createSquare(snake.tail[i].x, snake.tail[i].y, 15, 15, "#fff");
+    }
+    
 }
 
 document.addEventListener('keydown', (key)=>{
+    console.log(key.code);
     if(key.code === "ArrowDown"){
         snake.direction.x = 0;
         snake.direction.y = 1;
@@ -76,7 +89,8 @@ const gameLoop = () => {
     setInterval(() => {
         snake.move();
         update();
-    }, 250);
+        
+    }, 1000);
 }
 
 gameLoop();
