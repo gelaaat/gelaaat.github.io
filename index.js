@@ -128,13 +128,12 @@ const update = () => {
     }
     
     
-
     if (isTouching()){
         apple.generate(); 
         
     }
     else{
-        createSquare(apple.position.x, apple.position.y, 15, 15, "#ff000");
+        createSquare(apple.position.x, apple.position.y, 15, 15, "#FF0000");
         if(snake.tail.length > 1){
             let headX = snake.tail[snake.tail.length - 1].x;
             let headY = snake.tail[snake.tail.length - 1].y;
