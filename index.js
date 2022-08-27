@@ -41,6 +41,7 @@ class Snake{
         this.tail.push(newReaction);
         if(!isTouching()){
             this.tail.shift();
+            console.log('entro en el shift')
         }
         
         
@@ -68,7 +69,7 @@ class Apple{
         }
         
 
-        createSquare(this.position.x, this.position.y, 15, 15, "#FF000");
+        createSquare(this.position.x, this.position.y, 15, 15, "#FF0000");
         
     }
 
@@ -107,17 +108,50 @@ const createSquare = (x, y, width, height, color) => {
 }
 
 const update = () => {
+
+
+    if(snake.tail[snake.tail.length - 1].x < 0 || snake.tail[snake.tail.length - 1].y < 0){
+        snake.tail = [{x:snake.x, y:snake.y}];
+        snake.direction = [{x:1, y:0}];
+    }
+    else if(snake.tail[snake.tail.length - 1].x >= 500 || snake.tail[snake.tail.length - 1].y >= 500){
+        snake.tail = [{x:snake.x, y:snake.y}];
+        snake.direction = [{x:1, y:0}];
+    }
+
+
     createSquare(0, 0, canvas.width, canvas.height, "black");
     for (let i = 0; i < snake.tail.length; i++) {
-        createSquare(snake.tail[i].x, snake.tail[i].y, 15, 15, "#fff");
+        createSquare(snake.tail[i].x, snake.tail[i].y, 15, 15, "#99FF99");
     }
     
     if (isTouching()){
+        console.log('menjadaaa')
         apple.generate();
+        
     }
     else{
-        createSquare(apple.position.x, apple.position.y, 15, 15, "#FF000");
+        createSquare(apple.position.x, apple.position.y, 15, 15, "#ff000");
+        let headX = snake.tail[snake.tail.length - 1].x;
+        let headY = snake.tail[snake.tail.length - 1].y;
+
+        for (const position of snake.tail) {
+            console.log('head');
+            console.log(snake.tail[snake.tail.length - 1]);
+            console.log(position);
+            if(snake.tail.length === 1){
+                break;
+            }
+
+            else if(position.x === headX && position.y === headY){
+                snake.tail = [{x:snake.x, y:snake.y}];
+                snake.direction = [{x:1, y:0}];
+                console.log('game over');
+            }
+        }
     }
+
+    
     
 }
 
@@ -152,7 +186,7 @@ const gameLoop = () => {
         update();
         
         
-    }, 100);
+    }, 1000);
 }
 
 gameLoop();
