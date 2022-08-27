@@ -27,6 +27,7 @@ h1{
 .canvas{
     width: 50%;
     width: 500px;
+    padding: 20px;
 }
 
 .canvas p{
