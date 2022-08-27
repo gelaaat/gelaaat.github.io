@@ -41,8 +41,11 @@ class Snake{
         this.tail.push(newReaction);
         if(!isTouching()){
             this.tail.shift();
-            console.log('entro en el shift')
+            
         }
+        
+            
+        
         
         
     }
@@ -109,7 +112,6 @@ const createSquare = (x, y, width, height, color) => {
 
 const update = () => {
 
-
     if(snake.tail[snake.tail.length - 1].x < 0 || snake.tail[snake.tail.length - 1].y < 0){
         snake.tail = [{x:snake.x, y:snake.y}];
         snake.direction = [{x:1, y:0}];
@@ -125,30 +127,33 @@ const update = () => {
         createSquare(snake.tail[i].x, snake.tail[i].y, 15, 15, "#99FF99");
     }
     
+    
+
     if (isTouching()){
-        console.log('menjadaaa')
-        apple.generate();
+        apple.generate(); 
         
     }
     else{
         createSquare(apple.position.x, apple.position.y, 15, 15, "#ff000");
-        let headX = snake.tail[snake.tail.length - 1].x;
-        let headY = snake.tail[snake.tail.length - 1].y;
-
-        for (const position of snake.tail) {
-            console.log('head');
-            console.log(snake.tail[snake.tail.length - 1]);
-            console.log(position);
-            if(snake.tail.length === 1){
-                break;
-            }
-
-            else if(position.x === headX && position.y === headY){
-                snake.tail = [{x:snake.x, y:snake.y}];
-                snake.direction = [{x:1, y:0}];
-                console.log('game over');
+        if(snake.tail.length > 1){
+            let headX = snake.tail[snake.tail.length - 1].x;
+            let headY = snake.tail[snake.tail.length - 1].y;
+            
+            for (let i = snake.tail.length - 2; i >= 0; i--) {
+            
+                if(snake.tail[i].x === headX && snake.tail[i].y === headY){
+                    console.log(snake.tail[snake.tail.length - 1]);
+                    console.log(snake.tail[i]);
+                    snake.tail = [{x:snake.x, y:snake.y}];
+                    snake.direction = [{x:1, y:0}];
+                    
+                }
+    
+                
             }
         }
+        
+        
     }
 
     
@@ -186,7 +191,7 @@ const gameLoop = () => {
         update();
         
         
-    }, 1000);
+    }, 100);
 }
 
 gameLoop();
