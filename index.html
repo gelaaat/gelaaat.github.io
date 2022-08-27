@@ -6,10 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="index.js" defer></script>
+    <script src="https://kit.fontawesome.com/79da8ab4c8.js" crossorigin="anonymous"></script>
     <title>Snake Game</title>
 </head>
 <body>
     <h1>Snake Game</h1>
-    <canvas id="canvas" width="500px" height="500px"></canvas>
+    <section class="game">
+        <div class="canvas">
+            <canvas id="canvas" width="500px" height="500px"></canvas>
+            <p>SCORE:</p>
+            <p id="points"></p>
+        </div>
+        <section class="arrows">
+            <div><button class="btn" id="arrow-up"><i class="fa-solid fa-arrow-up fa-2x"></i></button></div>
+            <div>
+                <button class="btn" id="arrow-left"><i class="fa-solid fa-arrow-left fa-2x"></i></button>
+                <button class="btn" id="arrow-down"><i class="fa-solid fa-arrow-down fa-2x"></i></button>
+                <button class="btn" id="arrow-right"><i class="fa-solid fa-arrow-right fa-2x"></i></button>
+            </div>
+        </section>
+    </section>
 </body>
 </html>

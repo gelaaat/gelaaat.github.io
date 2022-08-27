@@ -182,13 +182,37 @@ document.addEventListener('keydown', (key)=>{
     }
 })
 
+document.getElementById('arrow-up').addEventListener('click', ()=>{
+    snake.direction[0].x = 0;
+    snake.direction[0].y = -1;
+});
 
+document.getElementById('arrow-down').addEventListener('click', ()=>{
+    snake.direction[0].x = 0;
+    snake.direction[0].y = 1;
+});
+
+document.getElementById('arrow-left').addEventListener('click', ()=>{
+    snake.direction[0].x = -1;
+    snake.direction[0].y = 0;
+});
+
+document.getElementById('arrow-right').addEventListener('click', ()=>{
+    snake.direction[0].x = 1;
+    snake.direction[0].y = 0;
+});
+
+
+const updatePoints = () => {
+    let points = document.getElementById('points');
+    points.innerHTML = snake.tail.length; 
+}
 
 const gameLoop = () => {
     setInterval(() => {
         snake.move();
         update();
-        
+        updatePoints();
         
     }, 100);
 }
