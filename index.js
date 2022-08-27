@@ -214,7 +214,7 @@ const gameLoop = () => {
         update();
         updatePoints();
         
-    }, 100);
+    }, 150);
 }
 
 gameLoop();

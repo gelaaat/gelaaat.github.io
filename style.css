@@ -36,12 +36,9 @@ h1{
 
 .arrows{
     width: 50%;
-    min-width: 100px;
-    margin: 20px;
-}
-
-.three-arrows{
     min-width: 280px;
+    margin: 20px;
+    text-align: center;
 }
 
 .btn{
